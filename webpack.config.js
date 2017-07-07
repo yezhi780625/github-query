@@ -1,6 +1,6 @@
 // 讓你可以動態插入 bundle 好的 .js 檔到 .index.html
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
     template: `${__dirname}/src/index.html`,
     filename: 'index.html',
@@ -34,23 +34,13 @@ module.exports = {
                 loader: 'babel-loader',
             }
         ]
-        // preLoaders: [
-        //   {
-        //     test: /\.jsx$|\.js$/,
-        //     loader: 'eslint-loader',
-        //     include: `${__dirname}/src`,
-        //     exclude: /bundle\.js$/,
-        //   }
-        // ],
-        // loaders: [{
-        //   test: /\.js$/,
-        //   exclude: /node_modules/,
-        //   loader: 'babel-loader',
-        // }],
     },
     devServer: {
         inline: true,
         port: 8008,
     },
-    plugins: [HTMLWebpackPluginConfig],
+    plugins: [
+        HTMLWebpackPluginConfig,
+        new UglifyJSPlugin()
+        ],
 };
